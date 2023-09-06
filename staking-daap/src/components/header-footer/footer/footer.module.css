@@ -1,0 +1,24 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 50px;
+  max-width: 1440px;
+
+  margin-top: 50px;
+  padding: 16px 48px;
+
+  color: var(--light-grey-color);
+  font-size: var(--body-mobile-font-size);
+  font-family: var(--body-font);
+  border: 0;
+  border-top: 1px solid var(--accent-blue-color);
+  border-bottom: 1px solid var(--accent-blue-color);
+}
+
+@media (max-width: 480px) {
+  .footer {
+    display: none;
+  }
+}

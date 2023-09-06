@@ -1,5 +1,5 @@
-@import './styles/colors.css';
-@import './styles/fonts.css';
+@import "./ui-kit/colors.css";
+@import "./ui-kit/font-styles.css";
 
 body {
   max-width: 1920px;
@@ -17,30 +17,40 @@ body {
   color: var(--white-color);
 }
 
-p{
+p {
   margin: 0;
 }
 
 button {
-  width: 235px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 223px;
   height: 48px;
-  background-color: #272A2E;
+
+  background-color: #272a2e;
+
   font-family: var(--button-font);
   font-size: var(--button-tablet-web-font-size);
   color: var(--white-color);
+
   margin: 0;
-  padding: 0;
   border: none;
   cursor: pointer;
+
+  line-height: 24px;
+  letter-spacing: 0.28px;
+  text-transform: uppercase;
 }
 
 button:hover {
-  background-color: #272A2EE5;
+  background-color: #272a2ee5;
 }
 
 @media (max-width: 480px) {
   button {
-    width: 136px;
+    width: 167px;
     height: 40px;
     font-size: var(--button-mobile-font-size);
   }
