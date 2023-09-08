@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap");
 
 /* font-family: 'Kanit', sans-serif; */
@@ -9,6 +9,7 @@
   --robotoMono-font-family: "Roboto Mono", monospace;
 
   /* font-weight */
+  --font-weight-bold: 700;
   --font-weight-medium: 500;
   --font-weight-regular: 400;
 
@@ -16,11 +17,10 @@
   --color-font: #ffffff;
 
   /* fonts style and size in title */
-
   --title-font: var(--kanit-font-family);
-  --title-web-font-size: 140px;
-  --title-tablet-font-size: 112px;
-  --title-mobile-font-size: 48px;
+  --title-web-font-size: 48px;
+  --title-tablet-font-size: 40px;
+  --title-mobile-font-size: 28px;
 
   /* fonts style and size in subTitle */
   --subTitle-font: var(--kanit-font-family);
@@ -28,14 +28,22 @@
   --subTitle-tablet-font-size: 20px;
   --subTitle-mobile-font-size: 18px;
 
+  /* information about staking */
+  --body-font: var(--robotoMono-font-family);
+  --value-web-font-size: 36px;
+  --value-tablet-font-size: 28px;
+  --value-mobile-font-size: 18px;
+
+  --nameStat-web-tablet-font-size: 16px;
+  --nameStat-mobile-font-size: 12px;
+
   /* fonts style and size in body */
   --body-font: var(--robotoMono-font-family);
-  --body-web-font-size: 18px;
-  --body-tablet-font-size: 16px;
+  --body--web-tablet-font-size: 16px;
   --body-mobile-font-size: 14px;
 
   /* fonts style components */
+  --button-web-tablet-font-size: 16px;
   --button-mobile-font-size: 14px;
-  --button-tablet-web-font-size: 16px;
   --button-font: var(--robotoMono-font-family);
 }

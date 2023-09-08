@@ -7,7 +7,7 @@
   max-width: 1440px;
 
   margin-top: 50px;
-  padding: 16px 48px;
+  padding: 16px 40px;
 
   color: var(--light-grey-color);
   font-size: var(--body-mobile-font-size);
@@ -17,6 +17,11 @@
   border-bottom: 1px solid var(--accent-blue-color);
 }
 
+@media (max-width: 820px) {
+  .footer {
+    padding: 16px 48px;
+  }
+}
 @media (max-width: 480px) {
   .footer {
     display: none;

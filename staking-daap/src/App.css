@@ -1,12 +1,15 @@
 @import "./ui-kit/colors.css";
 @import "./ui-kit/font-styles.css";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   max-width: 1920px;
   min-width: 375px;
   background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
 }
 #root {
   max-width: 1440px;
@@ -34,13 +37,14 @@ button {
   font-family: var(--button-font);
   font-size: var(--button-tablet-web-font-size);
   color: var(--white-color);
+  font-weight: var(--font-weight-medium);
 
   margin: 0;
   border: none;
   cursor: pointer;
 
-  line-height: 24px;
-  letter-spacing: 0.28px;
+  line-height: 24px; 
+  letter-spacing: 0.32px;
   text-transform: uppercase;
 }
 
