@@ -39,7 +39,7 @@
 
   /* fonts style and size in body */
   --body-font: var(--robotoMono-font-family);
-  --body--web-tablet-font-size: 16px;
+  --body-web-tablet-font-size: 16px;
   --body-mobile-font-size: 14px;
 
   /* fonts style components */
