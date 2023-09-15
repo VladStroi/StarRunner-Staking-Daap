@@ -1,21 +1,39 @@
+import React from "react";
 import { StatusBar } from "../status-bar/status-bar";
 import styles from "./header.module.css";
 import logo from "./logo.png";
 
-import { useAccount, useBalance, useConnect, useToken   } from "wagmi";
+import { useAccount, useBalance, useConnect, useContractRead } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
+
+import { tokenAddress } from "./../../token/tokenADDRESS";
+import tokenABI from "./../../token/tokenABI.json";
 
 export const Header = () => {
   const { address, isConnected } = useAccount();
+
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
-  const { data, isError, isLoading } = useBalance({
-    address: "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+
+  const { data } = useBalance({
+    address: address,
   });
-  const { token, isError2, isLoading2 } = useToken({
-    address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
-  })
+
+  const { data: dataTokenBalance } = useContractRead({
+    address: tokenAddress,
+    abi: tokenABI,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const tokenBalance = isConnected
+    ? Number(dataTokenBalance / 10n ** 18n)
+    : "null";
+
+
+ 
+
   if (isConnected)
     return (
       <>
@@ -26,12 +44,19 @@ export const Header = () => {
               <img src={logo} alt="logo" />
             </a>
           </div>
-          <div>
-            <div>
-              {data?.symbol} {data?.formatted.substring(0, 6)} 
+          <div className={styles.balanceWallet}>
+            <div className={styles.struToken}>
+              <div className={styles.logo}></div>
+              <span>{tokenBalance} STRU</span>
             </div>
-            {/* btn or address with address*/}
-            <span>{address.substring(0, 16)}...</span>
+            <div className={styles.dataWallet}>
+              <div className={styles.logo}></div>
+              <span>
+                {data?.formatted.substring(0, 6)} {data?.symbol}
+              </span>
+              <span>|</span>
+              <span>{address.substring(0, 16)}...</span>
+            </div>
           </div>
         </header>
       </>
@@ -47,7 +72,6 @@ export const Header = () => {
           </a>
         </div>
         <div>
-          {/* btn or address with address*/}
           <button onClick={() => connect()}>Connect Wallet</button>
         </div>
       </header>
