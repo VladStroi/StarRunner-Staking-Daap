@@ -4,7 +4,6 @@ import { tokenAddress } from "./../../token/tokenADDRESS";
 import tokenABI from "./../../token/tokenABI.json";
 import { useState } from "react";
 
-
 export const Stake = () => {
 
   const [depositValue, setDepositValue] = useState("");
