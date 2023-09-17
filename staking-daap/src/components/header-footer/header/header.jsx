@@ -29,10 +29,7 @@ export const Header = () => {
 
   const tokenBalance = isConnected
     ? Number(dataTokenBalance / 10n ** 18n)
-    : "null";
-
-
- 
+    : "null"; 
 
   if (isConnected)
     return (
