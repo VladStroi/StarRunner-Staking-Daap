@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "../status-bar/status-bar";
 import styles from "./header.module.css";
-import logo from "./logo.png";
+import logoDexola from "./logo.png";
 
 import { useAccount, useBalance, useConnect, useContractRead } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
@@ -38,7 +38,7 @@ export const Header = () => {
         <header className={styles.header}>
           <div>
             <a href="https://dexola.com/" target="_blank">
-              <img src={logo} alt="logo" />
+              <img src={logoDexola} alt="logo" />
             </a>
           </div>
           <div className={styles.balanceWallet}>
@@ -65,7 +65,7 @@ export const Header = () => {
       <header className={styles.header}>
         <div>
           <a href="https://dexola.com/" target="_blank">
-            <img src={logo} alt="logo" />
+            <img src={logoDexola} alt="logo" />
           </a>
         </div>
         <div>
