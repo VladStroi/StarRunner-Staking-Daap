@@ -19,8 +19,8 @@ export const Stake = () => {
   });
   
   const tokenBalance = isConnected
-  ? Number(dataTokenBalance / 10n ** 18n)
-  : "null";
+  ? Number(dataTokenBalance) / 10 ** 18
+  : 'not connect wallet';
   //
 
   // number input validation

@@ -28,7 +28,7 @@ export const Header = () => {
 
   
   const tokenBalance = isConnected
-  ? Number(Number(dataTokenBalance) / 10 ** 18)
+  ? Number(dataTokenBalance) / 10 ** 18
   : 'not connect wallet';
   
   if (isConnected)
