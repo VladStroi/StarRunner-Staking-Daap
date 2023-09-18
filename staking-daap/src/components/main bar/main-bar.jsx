@@ -19,7 +19,7 @@ export const MainBar = () => {
   const { data: totalSupply } = useTotalSupply();
   const { data: getRewardForDuration } = useGetRewardForDuration();
 
-  const apr = ((totalSupply * 100n) / getRewardForDuration).toString();
+  const apr =  Math.floor((Number(getRewardForDuration) * 100) / Number(totalSupply));
   //
 
   //Days
