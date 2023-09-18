@@ -119,7 +119,7 @@ export const Header = () => {
                 viewBox="0 0 15 20"
                 fill="none"
               >
-                <g clip-path="url(#clip0_4669_689)">
+                <g clipPath="url(#clip0_4669_689)">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -140,7 +140,7 @@ export const Header = () => {
                 viewBox="0 0 16 16"
                 fill="none"
               >
-                <g clip-path="url(#clip0_4669_693)">
+                <g clipPath="url(#clip0_4669_693)">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
