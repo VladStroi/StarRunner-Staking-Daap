@@ -1,32 +1,74 @@
-import contractAbi from "./contractABI.json";
 import { contractAddress } from "./contractADDRESS";
+import contractAbi from "./contractABI.json";
 
-const {
-  data: dataTotalSupply,
-  isError: isErrorTotalSupply,
-  isLoading: isLoadingTotalSupply,
-} = useContractRead({
-  address: contractAddress,
-  abi: contractAbi,
-  functionName: "totalSupply",
-});
+import { useAccount, useContractRead } from "wagmi";
 
-const {
-  data: dataGetRewardForDuration,
-  isError: isErrorGetRewardForDuration,
-  isLoading: isLoadingGetRewardForDuration,
-} = useContractRead({
-  address: contractAddress,
-  abi,
-  functionName: "getRewardForDuration",
-});
+// Staked Balance
+export const useStakingBalance = () => {
+  const { address } = useAccount();
 
-const {
-  data: dataBalanceOf,
-  isError: isErrorBalanceOf,
-  isLoading: isLoadingBalanceOf,
-} = useContractRead({
-  address: contractAddress,
-  abi,
-  functionName: "balanceOf",
-});
+  const { data } = useContractRead({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "balanceOf",
+    args: [address],
+  });
+  return { data };
+};
+//
+
+// APR
+export const useTotalSupply = () => {
+  const { data } = useContractRead({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "totalSupply",
+  });
+  return { data };
+};
+
+export const useGetRewardForDuration = () => {
+  const { data } = useContractRead({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "getRewardForDuration",
+  });
+  return { data };
+};
+//
+
+//Days
+export const usePeriodFinish = () => {
+  const { data } = useContractRead({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "periodFinish",
+  });
+  return { data };
+};
+//
+
+// Rewards
+export const useRewards = () => {
+  const { address } = useAccount();
+
+  const { data } = useContractRead({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "earned",
+    args: [address],
+  });
+  return { data };
+};
+//
+
+// Rewards rate
+export const useRewardRate = () => {
+  const { data } = useContractRead({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "rewardRate",
+  });
+  return { data };
+};
+//

@@ -1,25 +1,30 @@
 import styles from "./main-bar.module.css";
 
 import { useAccount } from "wagmi";
-import {useTotalSupply, useGetRewardForDuration} from './apr'
-import {useStakingBalance} from './staked-balance'
-import {usePeriodFinish} from './days'
+import {
+  useStakingBalance,
+  usePeriodFinish,
+  useRewards,
+  useTotalSupply,
+  useGetRewardForDuration,
+} from "./../contract/contractAPI";
 
 export const MainBar = () => {
-
   const { isConnected } = useAccount();
 
   // Staked Balance
   const { data: stakingBalance } = useStakingBalance();
 
-  const stakedBalance = Number(stakingBalance).toFixed(2);
+  const stakedBalance = Number(stakingBalance) / 10 ** 18;
   //
 
   // APR
   const { data: totalSupply } = useTotalSupply();
   const { data: getRewardForDuration } = useGetRewardForDuration();
 
-  const apr =  Math.floor((Number(getRewardForDuration) * 100) / Number(totalSupply));
+  const apr = Math.floor(
+    (Number(getRewardForDuration) * 100) / Number(totalSupply)
+  );
   //
 
   //Days
@@ -31,6 +36,11 @@ export const MainBar = () => {
   const days = Math.floor(
     (Number(periodFinish) - currentTimestamp) / oneDayDurationInSeconds
   );
+  //
+
+  // Rewards
+  const { data: earned } = useRewards();
+  const rewards = Number(earned) / 10 ** 18;
   //
 
   return (
@@ -57,7 +67,9 @@ export const MainBar = () => {
           </div>
           <div className={styles.stakingData}>
             <div className={styles.balance}>
-              <p className={styles.value}>0</p>
+              <p className={styles.value}>
+                {isConnected ? rewards.toString().substring(0, 4) : "0"}
+              </p>
               <p className={styles.token}>STRU</p>
             </div>
             <p className={styles.name}>Rewards</p>
