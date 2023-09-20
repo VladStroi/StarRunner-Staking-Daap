@@ -32,7 +32,7 @@ export const Stake = () => {
   //Available
   const { data: dataTokenBalance } = useTokenBalance();
 
-  const tokenBalance = isConnected ? Number(dataTokenBalance) / 10 ** 18 : null;
+  const tokenBalance = isConnected ? (Number(dataTokenBalance) / 10 ** 18).toFixed(3) : null;
   //
 
   //Input validation

@@ -44,12 +44,12 @@ export const Header = () => {
           <div className={styles.balanceWallet}>
             <div className={styles.struToken}>
               <div className={styles.logo}></div>
-              <span>{tokenBalance} STRU</span>
+              <span>{tokenBalance.toFixed(3)} STRU</span>
             </div>
             <div className={styles.dataWallet}>
               <div className={styles.logo}></div>
               <span>
-                {data?.formatted.substring(0, 6)} {data?.symbol}
+                {Number(data?.formatted).toFixed(3)} {data?.symbol}
               </span>
               <span>|</span>
               <span>{address.substring(0, 16)}...</span>

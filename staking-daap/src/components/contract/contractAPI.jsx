@@ -1,7 +1,7 @@
 import { contractAddress } from "./contractADDRESS";
 import contractAbi from "./contractABI.json";
 
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useContractRead, useContractWrite } from "wagmi";
 
 // Staked Balance
 export const useStakingBalance = () => {
@@ -70,5 +70,26 @@ export const useRewardRate = () => {
     functionName: "rewardRate",
   });
   return { data };
+};
+//
+
+export const useClaimReward = () => {
+  const { write } = useContractWrite({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "claimReward",
+  });
+  return { write };
+};
+
+//Withdraw
+export const useWithdraw = (amount) => {
+  const { data, write } = useContractWrite({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "withdraw",
+    args: [amount],
+  });
+  return { data, write };
 };
 //

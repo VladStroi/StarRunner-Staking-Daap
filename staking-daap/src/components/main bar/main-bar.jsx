@@ -40,7 +40,7 @@ export const MainBar = () => {
 
   // Rewards
   const { data: earned } = useRewards();
-  const rewards = Number(earned) / 10 ** 18;
+  const rewards = (Number(earned) / 10 ** 18).toFixed(2);
   //
 
   return (
@@ -68,7 +68,7 @@ export const MainBar = () => {
           <div className={styles.stakingData}>
             <div className={styles.balance}>
               <p className={styles.value}>
-                {isConnected ? rewards.toString().substring(0, 4) : "0"}
+                {isConnected ? rewards : "0"}
               </p>
               <p className={styles.token}>STRU</p>
             </div>
