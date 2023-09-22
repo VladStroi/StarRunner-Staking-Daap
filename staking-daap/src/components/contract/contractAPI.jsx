@@ -3,6 +3,8 @@ import contractAbi from "./contractABI.json";
 
 import { useAccount, useContractRead, useContractWrite } from "wagmi";
 
+//CONTRACT READ
+
 // Staked Balance
 export const useStakingBalance = () => {
   const { address } = useAccount();
@@ -37,7 +39,7 @@ export const useGetRewardForDuration = () => {
 };
 //
 
-//Days
+// Days
 export const usePeriodFinish = () => {
   const { data } = useContractRead({
     address: contractAddress,
@@ -73,6 +75,10 @@ export const useRewardRate = () => {
 };
 //
 
+//CONTRACT WRITE
+
+
+// Claim reward
 export const useClaimReward = () => {
   const { write } = useContractWrite({
     address: contractAddress,
@@ -81,8 +87,9 @@ export const useClaimReward = () => {
   });
   return { write };
 };
+//
 
-//Withdraw
+// Withdraw
 export const useWithdraw = (amount) => {
   const { data, write } = useContractWrite({
     address: contractAddress,
@@ -93,3 +100,14 @@ export const useWithdraw = (amount) => {
   return { data, write };
 };
 //
+
+// Stake
+export const useStake = (amount) => {
+  const { write } = useContractWrite({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: "stake",
+    args: [amount],
+  });
+  return { write };
+};

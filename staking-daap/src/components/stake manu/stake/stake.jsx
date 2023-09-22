@@ -1,14 +1,18 @@
 import styles from "./stake.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import { contractAddress } from "../../contract/contractADDRESS";
 
-import { useTokenBalance } from "../../token/tokenAPI";
+import { useTokenBalance, useApprove } from "../../token/tokenAPI";
 import {
   usePeriodFinish,
   useStakingBalance,
   useTotalSupply,
   useRewardRate,
+  useStake,
 } from "./../../contract/contractAPI";
+
+import { useWaitForTransaction } from "wagmi";
 
 export const Stake = () => {
   const { isConnected } = useAccount();
@@ -32,7 +36,9 @@ export const Stake = () => {
   //Available
   const { data: dataTokenBalance } = useTokenBalance();
 
-  const tokenBalance = isConnected ? (Number(dataTokenBalance) / 10 ** 18).toFixed(3) : null;
+  const tokenBalance = isConnected
+    ? (Number(dataTokenBalance) / 10 ** 18).toFixed(3)
+    : null;
   //
 
   //Input validation
@@ -61,21 +67,39 @@ export const Stake = () => {
   //
 
   //stake btn
-  const stake = () => {
+  const [hash, setHash] = useState("");
 
-    alert("Oops, something's wrong")
-    // if (depositValue > tokenBalance) {
-    //   console.error("not enough tokens");
-    // } else {
-    //   const { data: dataStake } = useContractWrite({
-    //     address: tokenAddress,
-    //     abi: tokenABI,
-    //     functionName: "stake",
-    //     args: [address],
-    //   });
-    // }
+  const {
+    writeAsync: writeApprove,
+
+  } = useApprove();
+
+  const { write: writeStake } = useStake(BigInt(depositValue * 10 ** 18));
+
+  const res = useWaitForTransaction({
+    hash,
+  });
+
+  const stake = async () => {
+    if (Number(depositValue) > Number(tokenBalance)) {
+      console.error("not enough tokens");
+    } else {
+      const rest = await writeApprove({
+        functionName: "approve",
+        args: [contractAddress, BigInt(depositValue * 10 ** 18)],
+      });
+      console.log(rest);
+      setHash(rest.hash);
+    }
   };
+
   //
+  useEffect(() => {
+    console.log("effet", res.isSuccess, res.status);
+    if (res.isSuccess) {
+      writeStake();
+    }
+  }, [res.status]);
 
   return (
     <section className={styles.sectionWindow}>
