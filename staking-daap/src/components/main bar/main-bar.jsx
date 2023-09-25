@@ -1,46 +1,37 @@
 import styles from "./main-bar.module.css";
 
 import { useAccount } from "wagmi";
-import {
-  useStakingBalance,
-  usePeriodFinish,
-  useRewards,
-  useTotalSupply,
-  useGetRewardForDuration,
-} from "./../contract/contractAPI";
+import { smartContractRead } from "./../contract/contractAPI";
 
 export const MainBar = () => {
   const { isConnected } = useAccount();
+  const { address } = useAccount();
 
   // Staked Balance
-  const { data: stakingBalance } = useStakingBalance();
-
-  const stakedBalance = Number(stakingBalance) / 10 ** 18;
+  const stakingBalance = smartContractRead("balanceOf", [address]);
+  const stakedBalance = (Number(stakingBalance.data) / 10 ** 18).toFixed(2);
   //
 
   // APR
-  const { data: totalSupply } = useTotalSupply();
-  const { data: getRewardForDuration } = useGetRewardForDuration();
-
+  const totalSupply = smartContractRead("totalSupply");
+  const getRewardForDuration = smartContractRead("getRewardForDuration");
   const apr = Math.floor(
-    (Number(getRewardForDuration) * 100) / Number(totalSupply)
+    (Number(getRewardForDuration.data) * 100) / Number(totalSupply.data)
   );
   //
 
   //Days
-  const { data: periodFinish } = usePeriodFinish();
-
+  const periodFinish = smartContractRead("periodFinish");
   const currentTimestamp = Math.floor(Date.now()) / 1000;
   const oneDayDurationInSeconds = 24 * 60 * 60;
-
   const days = Math.floor(
-    (Number(periodFinish) - currentTimestamp) / oneDayDurationInSeconds
+    (Number(periodFinish.data) - currentTimestamp) / oneDayDurationInSeconds
   );
   //
 
   // Rewards
-  const { data: earned } = useRewards();
-  const rewards = (Number(earned) / 10 ** 18).toFixed(2);
+  const earned = smartContractRead("earned", [address]);
+  const rewards = (Number(earned.data) / 10 ** 18).toFixed(2);
   //
 
   return (
@@ -67,9 +58,7 @@ export const MainBar = () => {
           </div>
           <div className={styles.stakingData}>
             <div className={styles.balance}>
-              <p className={styles.value}>
-                {isConnected ? rewards : "0"}
-              </p>
+              <p className={styles.value}>{isConnected ? rewards : "0"}</p>
               <p className={styles.token}>STRU</p>
             </div>
             <p className={styles.name}>Rewards</p>

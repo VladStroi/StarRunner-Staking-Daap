@@ -1,34 +1,20 @@
 import styles from "./withdraw.module.css";
-import {
-  useStakingBalance,
-  usePeriodFinish,
-  useRewardRate,
-  useTotalSupply,
-  useWithdraw,
-} from "./../../contract/contractAPI";
 import { useState } from "react";
-import { useWaitForTransaction } from "wagmi";
+import { useAccount, useWaitForTransaction } from "wagmi";
+import {
+  smartContractWrite,
+  smartContractRead,
+} from "../../contract/contractAPI";
 
 export const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState("");
+  const { address } = useAccount();
 
   // Staked Balance
-  const { data: stakingBalance } = useStakingBalance();
-
-  const stakedBalance = Number(stakingBalance) / 10 ** 18;
+  const stakingBalance = smartContractRead("balanceOf", [address]);
+  const stakedBalance = (Number(stakingBalance.data) / 10 ** 18).toFixed(2);
   //
-  //Rewards rate
-  const { data: periodFinish } = usePeriodFinish();
-  const { data: rewardRate } = useRewardRate();
-  const { data: totalSupply } = useTotalSupply();
 
-  const currentTimestamp = Math.floor(Date.now()) / 1000;
-  const remaining = Number(periodFinish) - currentTimestamp;
-  const available = remaining * Number(rewardRate);
-
-  const rate =
-    (stakedBalance * available) / Number(totalSupply) + stakedBalance;
-  //
   //Input validation
   const escapeRegExp = (string) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -55,18 +41,21 @@ export const Withdraw = () => {
   //
 
   //withdraw btn
-  const { data, write } = useWithdraw(BigInt(withdrawValue * 10 ** 18));
+  const withdrawToken = smartContractWrite();
 
-  const { isLoading, isSuccess, isError } = useWaitForTransaction({
-    hash: data?.hash,
-  });
+  // const { isLoading, isSuccess, isError } = useWaitForTransaction({
+  //   hash: withdrawToken.data?.hash,
+  // });
 
   const withdraw = async () => {
     try {
       if (withdrawValue > stakedBalance) {
         console.error("not enough tokens");
       } else {
-        const withdrawTransaction = write();
+        const withdrawTransaction = withdrawToken.write({
+          functionName: "withdraw",
+          args: [BigInt(withdrawValue * 10 ** 18)],
+        });
       }
     } catch (error) {
       console.error("test: ", error);
@@ -77,11 +66,7 @@ export const Withdraw = () => {
     <section className={styles.sectionWindow}>
       <div className={styles.header}>
         <h1>Withdraw</h1>
-        <div className={styles.rate}>
-          <span>Reward rate:</span>
-          <h2 className={styles.amount}>{Math.floor(rate)}</h2>
-          <h3>STRU/week</h3>
-        </div>
+        
       </div>
       <div className={styles.stakeSetting}>
         <div className={styles.inputBlock}>

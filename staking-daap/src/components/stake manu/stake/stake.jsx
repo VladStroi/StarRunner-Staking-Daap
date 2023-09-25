@@ -3,41 +3,39 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { contractAddress } from "../../contract/contractADDRESS";
 
-import { useTokenBalance, useApprove } from "../../token/tokenAPI";
+import { tokenContractRead, tokenContractWrite } from "../../token/tokenAPI";
 import {
-  usePeriodFinish,
-  useStakingBalance,
-  useTotalSupply,
-  useRewardRate,
-  useStake,
-} from "./../../contract/contractAPI";
+  smartContractRead,
+  smartContractWrite,
+} from "../../contract/contractAPI";
 
 import { useWaitForTransaction } from "wagmi";
 
 export const Stake = () => {
   const { isConnected } = useAccount();
+  const { address } = useAccount();
   const [depositValue, setDepositValue] = useState("");
 
   //Rewards rate
-  const { data: stakingBalance } = useStakingBalance();
-  const { data: periodFinish } = usePeriodFinish();
-  const { data: rewardRate } = useRewardRate();
-  const { data: totalSupply } = useTotalSupply();
+  const stakingBalance = smartContractRead("balanceOf", [address]);
+  const periodFinish = smartContractRead("periodFinish");
+  const rewardRate = smartContractRead("rewardRate");
+  const totalSupply = smartContractRead("totalSupply");
 
-  const stakedBalance = Number(stakingBalance) / 10 ** 18;
+  const stakedBalance = Number(stakingBalance.data) / 10 ** 18;
   const currentTimestamp = Math.floor(Date.now()) / 1000;
-  const remaining = Number(periodFinish) - currentTimestamp;
-  const available = remaining * Number(rewardRate);
+  const remaining = Number(periodFinish.data) - currentTimestamp;
+  const available = remaining * Number(rewardRate.data);
 
   const rate =
-    (stakedBalance * available) / Number(totalSupply) + stakedBalance;
+    (stakedBalance * available) / Number(totalSupply.data) + stakedBalance;
   //
 
   //Available
-  const { data: dataTokenBalance } = useTokenBalance();
+  const dataTokenBalance = tokenContractRead("balanceOf", [address]);
 
   const tokenBalance = isConnected
-    ? (Number(dataTokenBalance) / 10 ** 18).toFixed(3)
+    ? (Number(dataTokenBalance.data) / 10 ** 18).toFixed(2)
     : null;
   //
 
@@ -66,15 +64,12 @@ export const Stake = () => {
   };
   //
 
-  //stake btn
+  //approve & stake btn
   const [hash, setHash] = useState("");
 
-  const {
-    writeAsync: writeApprove,
+  const approveToken = tokenContractWrite();
 
-  } = useApprove();
-
-  const { write: writeStake } = useStake(BigInt(depositValue * 10 ** 18));
+  const stakeToken = smartContractWrite();
 
   const res = useWaitForTransaction({
     hash,
@@ -84,22 +79,23 @@ export const Stake = () => {
     if (Number(depositValue) > Number(tokenBalance)) {
       console.error("not enough tokens");
     } else {
-      const rest = await writeApprove({
+      const sendApprove = await approveToken.writeAsync({
         functionName: "approve",
         args: [contractAddress, BigInt(depositValue * 10 ** 18)],
       });
-      console.log(rest);
-      setHash(rest.hash);
+      setHash(sendApprove.hash);
     }
   };
 
-  //
   useEffect(() => {
-    console.log("effet", res.isSuccess, res.status);
     if (res.isSuccess) {
-      writeStake();
+      stakeToken.write({
+        functionName: "stake",
+        args: [BigInt(depositValue * 10 ** 18)],
+      });
     }
   }, [res.status]);
+  //
 
   return (
     <section className={styles.sectionWindow}>

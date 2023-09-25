@@ -1,33 +1,24 @@
 import { tokenAddress } from "./tokenADDRESS";
-import { contractAddress } from "../contract/contractADDRESS";
 import tokenAbi from "./tokenABI.json";
 
-import { useAccount, useContractRead, useContractWrite } from "wagmi";
+import { useContractRead, useContractWrite } from "wagmi";
 
 //CONTRACT READ
-
-//Token Balance
-export const useTokenBalance = () => {
-  const { address } = useAccount();
-
-  const { data } = useContractRead({
+export const tokenContractRead = (functionName, args) => {
+  const contractRead = useContractRead({
     address: tokenAddress,
     abi: tokenAbi,
-    functionName: "balanceOf",
-    args: [address],
+    functionName,
+    args,
   });
-  return { data };
+  return contractRead;
 };
-//
 
 //CONTRACT WRITE
-
-//Approve token
-export const useApprove = () => {
-  const { writeAsync } = useContractWrite({
+export const tokenContractWrite = () => {
+  const tokenContractWrite = useContractWrite({
     address: tokenAddress,
     abi: tokenAbi,
   });
-  return { writeAsync };
+  return tokenContractWrite;
 };
-//

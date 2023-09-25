@@ -20,11 +20,11 @@
 
 .balanceWallet span {
   color: var(--color-font);
-font-family: var(--title-font);
-font-size: var(--walletBalance-web-tablet-font-size);
-font-weight: var(--font-weight-medium);
-line-height: 16px; 
-text-transform: uppercase;
+  font-family: var(--title-font);
+  font-size: var(--walletBalance-web-tablet-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: 16px;
+  text-transform: uppercase;
 }
 .struToken {
   display: flex;
@@ -33,6 +33,7 @@ text-transform: uppercase;
 }
 .struToken .logo {
   background: url(./stru.svg);
+  background-size: 100%;
 }
 .dataWallet {
   display: flex;
@@ -43,16 +44,22 @@ text-transform: uppercase;
 }
 .dataWallet .logo {
   background: url(./eth.svg);
+  background-size: 100%;
 }
 .logo {
   width: 32px;
   height: 32px;
   border-radius: 50%;
 }
+
+.hiddenMobile {
+  display: block;
+}
 @media (max-width: 820px) {
   .header {
     padding: 11px 48px;
   }
+
 }
 
 @media (max-width: 480px) {
@@ -60,4 +67,17 @@ text-transform: uppercase;
     top: 48px;
     padding: 0 24px;
   }
+  .balanceWallet span {
+    font-size: var(--walletBalance-mobile-font-size);
+    font-weight: var(--font-weight-regular);
+    line-height: normal;
+  }
+  .logo {
+    width: 24px;
+    height: 24px;
+  }
+  .hiddenMobile {
+    display: none;
+  }
+  
 }

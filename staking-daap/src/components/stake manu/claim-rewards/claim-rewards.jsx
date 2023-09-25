@@ -1,14 +1,21 @@
 import styles from "./claim-rewards.module.css";
-import { useRewards, useClaimReward } from "./../../contract/contractAPI";
+import { useAccount } from "wagmi";
+
+import {
+  smartContractRead,
+  smartContractWrite,
+} from "../../contract/contractAPI";
 
 export const ClaimRewards = () => {
+  const { address } = useAccount();
+
   // Rewards
-  const { data: earned } = useRewards();
-  const rewards = (Number(earned) / 10 ** 18).toFixed(2);
+  const earned = smartContractRead("earned", [address]);
+  const rewards = (Number(earned.data) / 10 ** 18).toFixed(2);
   //
 
   //Claim rewards
-  const { write } = useClaimReward();
+  const claimRewards = smartContractWrite();
   //
 
   return (
@@ -23,7 +30,11 @@ export const ClaimRewards = () => {
           <h3>STRU</h3>
         </div>
       </div>
-      <button onClick={() => write()}>claim rewards</button>
+      <button
+        onClick={() => claimRewards.write({ functionName: "claimReward" })}
+      >
+        claim rewards
+      </button>
     </section>
   );
 };

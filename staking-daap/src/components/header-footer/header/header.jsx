@@ -1,13 +1,10 @@
 import React from "react";
-import { StatusBar } from "../status-bar/status-bar";
 import styles from "./header.module.css";
-// import logoDexola from "./logo.png";
 
-import { useAccount, useBalance, useConnect, useContractRead } from "wagmi";
+import { useAccount, useBalance, useConnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
-import { tokenAddress } from "./../../token/tokenADDRESS";
-import tokenABI from "./../../token/tokenABI.json";
+import { tokenContractRead } from "../../token/tokenAPI";
 import { LogoDexola } from "./logo-dexola";
 
 export const Header = () => {
@@ -15,26 +12,19 @@ export const Header = () => {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
-  
-  const { data } = useBalance({
+
+  const { data: mainTokenBalance } = useBalance({
     address: address,
   });
-  const { data: dataTokenBalance } = useContractRead({
-    address: tokenAddress,
-    abi: tokenABI,
-    functionName: "balanceOf",
-    args: [address],
-  });
+  const dataTokenBalance = tokenContractRead("balanceOf", [address]);
 
-  
   const tokenBalance = isConnected
-  ? Number(dataTokenBalance) / 10 ** 18
-  : 'not connect wallet';
-  
+    ? Number(dataTokenBalance.data) / 10 ** 18
+    : "not connect wallet";
+
   if (isConnected)
     return (
       <>
-        <StatusBar />
         <header className={styles.header}>
           <div>
             <a href="https://dexola.com/" target="_blank">
@@ -44,15 +34,17 @@ export const Header = () => {
           <div className={styles.balanceWallet}>
             <div className={styles.struToken}>
               <div className={styles.logo}></div>
-              <span>{tokenBalance.toFixed(3)} STRU</span>
+              <span>{tokenBalance.toFixed(2)} STRU</span>
             </div>
             <div className={styles.dataWallet}>
               <div className={styles.logo}></div>
               <span>
-                {Number(data?.formatted).toFixed(3)} {data?.symbol}
+                {Number(mainTokenBalance.formatted).toFixed(2)} {mainTokenBalance.symbol}
               </span>
-              <span>|</span>
-              <span>{address.substring(0, 16)}...</span>
+              <span className={styles.hiddenMobile}>|</span>
+              <span className={styles.hiddenMobile}>
+                {address.substring(0, 16)}...
+              </span>
             </div>
           </div>
         </header>
@@ -61,7 +53,6 @@ export const Header = () => {
 
   return (
     <>
-      <StatusBar />
       <header className={styles.header}>
         <div>
           <a href="https://dexola.com/" target="_blank">
