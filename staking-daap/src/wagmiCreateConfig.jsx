@@ -22,26 +22,26 @@ const { chains, publicClient } = configureChains(
 export const config = createConfig({
     autoConnect: true,
     connectors: [
-      // new MetaMaskConnector({ chains }),
-      // new CoinbaseWalletConnector({
-      //   chains,
-      //   options: {
-      //     appName: "wagmi",
-      //   },
-      // }),
+      new MetaMaskConnector({ chains }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: "wagmi",
+        },
+      }),
       new WalletConnectConnector({
         chains,
         options: {
           projectId: "d1ed4a8b1d08ee63e62097023077970f",
         },
       }),
-      // new InjectedConnector({
-      //   chains,
-      //   options: {
-      //     name: "Injected",
-      //     shimDisconnect: true,
-      //   },
-      // }),
+      new InjectedConnector({
+        chains,
+        options: {
+          name: "Injected",
+          shimDisconnect: true,
+        },
+      }),
     ],
     publicClient,
   });

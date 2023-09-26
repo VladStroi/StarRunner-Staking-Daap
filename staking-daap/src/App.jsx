@@ -36,13 +36,13 @@ const projectId = "d1ed4a8b1d08ee63e62097023077970f";
 const provaiderApiKey = "b0f4f2bdbc524cf3b57cd014475e319d";
 const { chains, publicClient } = configureChains(
   [sepolia, mainnet],
-  [alchemyProvider({ apiKey: provaiderApiKey }), publicProvider()]
+  [infuraProvider({ apiKey: provaiderApiKey }), publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "connect",
-  projectId,
+  appName: "StarRunner-Staking-Daap",
   chains,
+  projectId,
 });
 
 const wagmiConfig = createConfig({
