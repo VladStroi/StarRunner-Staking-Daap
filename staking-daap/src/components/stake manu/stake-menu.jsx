@@ -19,8 +19,6 @@ export const StakeMenu = () => {
     setActiveButton(index);
   };
 
-  if (isConnected)
-
   return (
     <section className={styles.stakingMenu}>
       <div className={styles.navigation}>
@@ -38,32 +36,12 @@ export const StakeMenu = () => {
         ))}
       </div>
       <Routes>
-        <Route path="/" element={<Stake />} />
-        <Route path="/Stake" element={<Stake />} />
-        <Route path="/Withdraw" element={<Withdraw />} />
-        <Route path="/Claim rewards" element={<ClaimRewards />} />
+        <Route path="/" element={isConnected ? <Stake /> : <NotConnect/>} />
+        <Route path="/Stake" element={isConnected ? <Stake /> : <NotConnect/>} />
+        <Route path="/Withdraw" element={isConnected ? <Withdraw /> : <NotConnect/>} />
+        <Route path="/Claim rewards" element={isConnected ? <ClaimRewards /> : <NotConnect/>} />
         <Route path="*" element={<span>error</span>} />
       </Routes>
-    </section>
-  );
-
-  return (
-    <section className={styles.stakingMenu}>
-      <div className={styles.navigation}>
-        {["Stake", "Withdraw", "Claim rewards"].map((text, index) => (
-          <Link
-            key={index}
-            to={`/${text}`}
-            className={`${styles.navButton} ${
-              index === activeButton ? styles.active : ""
-            }`}
-            onClick={() => handleButtonClick(index)}
-          >
-            <span className={styles.buttonText}>{text}</span>
-          </Link>
-        ))}
-      </div>
-      <NotConnect/>
     </section>
   );
 };

@@ -7,17 +7,19 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { sepolia } from "wagmi/chains";
+import { sepolia, mainnet } from "wagmi/chains";
+  import { infuraProvider } from "wagmi/providers/infura";
 
 import { Footer } from "./components/header-footer/footer/footer";
 import { Header } from "./components/header-footer/header/header";
 import { MainBar } from "./components/main bar/main-bar";
 import { StakeMenu } from "./components/stake manu/stake-menu";
 
-const chains = [sepolia];
+const chains = [sepolia, mainnet];
 const projectId = "d1ed4a8b1d08ee63e62097023077970f";
+const provaiderApiKey = "b0f4f2bdbc524cf3b57cd014475e319d"
 
-const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+const { publicClient } = configureChains(chains, [ infuraProvider({ apiKey: provaiderApiKey })]);
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors: w3mConnectors({ projectId, chains }),

@@ -11,7 +11,7 @@ import { LogoDexola } from "./logo-dexola";
 
 export const Header = () => {
 
-  const { open, close } = useWeb3Modal()
+  const { open } = useWeb3Modal()
 
   const { address, isConnected } = useAccount();
   // const { connect } = useConnect({

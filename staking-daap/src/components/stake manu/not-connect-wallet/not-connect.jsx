@@ -2,13 +2,15 @@ import styles from "./not-connect.module.css";
 import { CircleError } from "./circle-error";
 import { WalletIcon } from "./wallet-icon";
 
+import { useWeb3Modal } from '@web3modal/react'
+
 import { useConnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
 export const NotConnect = () => {
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const { open } = useWeb3Modal({
+      connector: new InjectedConnector(),
+    })
 
   return (
     <section className={styles.sectionWindow}>
@@ -17,7 +19,7 @@ export const NotConnect = () => {
         <CircleError />
       </div>
       <span>To start staking you need to connect you wallet first</span>
-          <button onClick={() => connect()}>Connect Wallet</button>
+          <button onClick={() => open()}>Connect Wallet</button>
     </section>
   );
 };
