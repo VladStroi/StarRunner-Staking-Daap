@@ -1,23 +1,15 @@
 import React from "react";
 import styles from "./header.module.css";
 
-import { useWeb3Modal } from '@web3modal/react'
-
-import { useAccount, useBalance, useConnect } from "wagmi";
-// import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount, useBalance } from "wagmi";
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { tokenContractRead } from "../../token/tokenAPI";
 import { LogoDexola } from "./logo-dexola";
 
 export const Header = () => {
-
-  const { open } = useWeb3Modal()
-
+  
   const { address, isConnected } = useAccount();
-  // const { connect } = useConnect({
-  //   connector: new InjectedConnector(),
-  // });
-
   const { data: mainTokenBalance } = useBalance({
     address: address,
   });
@@ -44,7 +36,7 @@ export const Header = () => {
             <div className={styles.dataWallet}>
               <div className={styles.logo}></div>
               <span>
-                {Number(mainTokenBalance.formatted).toFixed(2)} {mainTokenBalance.symbol}
+                {Number(mainTokenBalance?.formatted).toFixed(2)} {mainTokenBalance?.symbol}
               </span>
               <span className={styles.hiddenMobile}>|</span>
               <span className={styles.hiddenMobile}>
@@ -65,7 +57,18 @@ export const Header = () => {
           </a>
         </div>
         <div>
-          <button onClick={() => open()}>Connect Wallet</button>
+        <ConnectButton.Custom>
+      {({ openConnectModal, connectModalOpen }) => {
+        return (
+          <button
+            disabled={isConnected && connectModalOpen}
+            onClick={openConnectModal}
+          >
+            Connect Wallet
+          </button>
+        );
+      }}
+    </ConnectButton.Custom>
         </div>
       </header>
     </>

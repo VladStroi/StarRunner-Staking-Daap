@@ -1,47 +1,28 @@
-import {
-    configureChains,
-    createConfig,
-    sepolia,
-  } from "wagmi";
-  import { infuraProvider } from "wagmi/providers/infura";
-  import { publicProvider } from "wagmi/providers/public";
-  import { InjectedConnector } from "wagmi/connectors/injected";
-  import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-  import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-  import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-  
+import "@rainbow-me/rainbowkit/styles.css";
+
+import { getDefaultWallets } from "@rainbow-me/rainbowkit";
+import { configureChains, createConfig } from "wagmi";
+import { sepolia } from "wagmi/chains";
+import { infuraProvider } from "wagmi/providers/infura";
+import { publicProvider } from "wagmi/providers/public";
+
+const projectId = "d1ed4a8b1d08ee63e62097023077970f";
+const provaiderApiKey = "b0f4f2bdbc524cf3b57cd014475e319d";
 
 const { chains, publicClient } = configureChains(
-    [sepolia],
-    [
-      infuraProvider({ apiKey: "b0f4f2bdbc524cf3b57cd014475e319d" }),
-      publicProvider(),
-    ]
-  );
+  [sepolia],
+  [infuraProvider({ apiKey: provaiderApiKey }), publicProvider()]
+);
 
+const { connectors } = getDefaultWallets({
+  appName: "StarRunner-Staking-Daap",
+  chains,
+  projectId,
+});
+
+export { chains };
 export const config = createConfig({
-    autoConnect: true,
-    connectors: [
-      new MetaMaskConnector({ chains }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: "wagmi",
-        },
-      }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          projectId: "d1ed4a8b1d08ee63e62097023077970f",
-        },
-      }),
-      new InjectedConnector({
-        chains,
-        options: {
-          name: "Injected",
-          shimDisconnect: true,
-        },
-      }),
-    ],
-    publicClient,
-  });
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
