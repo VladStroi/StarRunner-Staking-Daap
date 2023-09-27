@@ -122,6 +122,7 @@
 }
 
 .buttonGroup span {
+  display: block;
   width: max-content;
   height: 24px;
   padding: 12px 40px;
@@ -146,13 +147,16 @@
   .inputBlock {
     max-width: 100%;
   }
+  .buttonGroup span {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
   .sectionWindow {
     position: relative;
     width: calc(100% - 48px);
-    height: 577px;
+    height: 443px;
     flex-shrink: 0;
     border: 0px;
     border-top: 1px solid var(--Accent-blue, #204ffe);
@@ -173,5 +177,13 @@
   }
   .available h3 {
     font-size: var(--body-mobile-font-size);
+  }
+  .buttonGroup {
+    width: calc(100% - 47px);
+  }
+  .buttonGroup button {
+    width: calc(100%);
+    height: 48px;
+    padding: 12px 40px;
   }
 }

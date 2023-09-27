@@ -136,7 +136,7 @@
   .sectionWindow {
     position: relative;
     width: calc(100% - 48px);
-    height: 577px;
+    height: 443px;
     flex-shrink: 0;
     border: 0px;
     border-top: 1px solid var(--Accent-blue, #204ffe);
@@ -157,6 +157,10 @@
   }
   .available h3 {
     font-size: var(--body-mobile-font-size);
+  }
+  .sectionWindow button {
+    width: calc(100% - 47px);
+    height: 48px;
   }
 }
 

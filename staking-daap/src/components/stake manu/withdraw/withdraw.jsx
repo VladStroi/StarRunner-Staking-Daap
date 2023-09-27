@@ -20,6 +20,7 @@ export const Withdraw = () => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   };
   const enforcer = (nextUserInput) => {
+    nextUserInput = nextUserInput.replace(/,/g, '.');
     const inputLength = nextUserInput.length;
     const inputRegex = RegExp("^\\d*(?:\\\\[.])?\\d*$");
 
