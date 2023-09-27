@@ -32,17 +32,20 @@
 .stakingDetails {
   max-width: 833px;
   flex-wrap: nowrap; 
+  gap: 40px;
 }
 
 .stakingData {
-  padding-right: 40px;
+  /* padding-right: 40px; */
+  gap: 0 12px;
   flex-direction: row;
 }
 
 .value,
 .token,
 .name {
-  margin-right: 8px;
+  /* margin-right: 8px; */
+ gap: 8px;
   display: flex;
   flex-direction: row;
   align-items: end;
@@ -68,6 +71,7 @@
 
 .name {
   letter-spacing: -0.32px;
+  width: max-content;
 }
 
 .background {
@@ -77,17 +81,12 @@
   right: 0;
   z-index: -1;
   height: 100vh;
-  /* background: radial-gradient(
-    circle,
-    rgb(80, 104, 224) 0%,
-    rgb(0, 22, 134) 50%,
-    rgba(0, 8, 55, 1) 100%
-  ); */
 }
 
 .balance {
   display: flex;
   flex-direction: row;
+  gap: 8px;
 }
 
 @media (max-width: 820px) {
@@ -99,9 +98,11 @@
   }
   .stakingDetails {
     flex-wrap: wrap; 
+    gap: 24px;
   }
   .stakingData {
-    padding-right: 24px;
+    /* padding-right: 24px; */
+    flex-direction: column;
   }
   .token,
   .name {
@@ -123,9 +124,10 @@
   }
   .stakingDetails {
     flex-wrap: nowrap; 
+    gap: 20px;
   }
   .stakingData {
-    padding-right: 20px;
+    /* padding-right: 20px; */
     flex-direction: column;
   }
   .token,
@@ -134,7 +136,11 @@
     flex: 1;
     line-height: 18px;
   }
+  
   .value {
     font-size: var(--value-mobile-font-size);
+  }
+  .balance {
+    gap: 4px;
   }
 }

@@ -70,7 +70,6 @@
 
 @media (max-width: 480px) {
   .header {
-    top: 48px;
     padding: 0 24px;
   }
   .balanceWallet span {
