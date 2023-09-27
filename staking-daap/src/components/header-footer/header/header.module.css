@@ -10,6 +10,12 @@
   padding: 11px;
   margin: 0 auto;
   z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.header.scrolling {
+  background-color: #060412d5;
+
 }
 .balanceWallet {
   display: flex;

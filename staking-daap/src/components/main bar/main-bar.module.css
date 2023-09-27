@@ -77,12 +77,12 @@
   right: 0;
   z-index: -1;
   height: 100vh;
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle,
     rgb(80, 104, 224) 0%,
     rgb(0, 22, 134) 50%,
     rgba(0, 8, 55, 1) 100%
-  );
+  ); */
 }
 
 .balance {

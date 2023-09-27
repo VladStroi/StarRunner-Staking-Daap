@@ -15,9 +15,14 @@ body {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0;
-  padding-top: 48px;
+  /* padding-top: 48px; */
   text-align: center;
-
+  background: radial-gradient(
+    circle,
+    rgb(80, 104, 224) 0%,
+    rgb(0, 22, 134) 50%,
+    rgba(0, 8, 55, 1) 100%
+  );
   color: var(--white-color);
 }
 

@@ -6,8 +6,9 @@
   height: 50px;
   max-width: 1440px;
 
-  margin-top: 50px;
+  /* margin-top: 50px; */
   padding: 16px 40px;
+  background-color: var(--background-color);
 
   color: var(--light-grey-color);
   font-size: var(--body-mobile-font-size);

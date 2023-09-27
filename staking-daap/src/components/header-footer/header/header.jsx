@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./header.module.css";
 
 import { useAccount, useBalance } from "wagmi";
@@ -18,11 +18,28 @@ export const Header = () => {
   const tokenBalance = isConnected
     ? Number(dataTokenBalance.data) / 10 ** 18
     : "not connect wallet";
+const [scrolling, setScrolling] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    const shouldScroll = window.scrollY > 50; // Задайте вашу умову тут (50, наприклад)
+
+    if (shouldScroll !== scrolling) {
+      setScrolling(shouldScroll);
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+  };
+}, [scrolling]);
 
   if (isConnected)
     return (
       <>
-        <header className={styles.header}>
+      <header className={`${styles.header} ${scrolling ? styles.scrolling : ''}`}>
           <div>
             <a href="https://dexola.com/" target="_blank">
               <LogoDexola />
@@ -50,7 +67,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={`${styles.header} ${scrolling ? styles.scrolling : ''}`}>
         <div>
           <a href="https://dexola.com/" target="_blank">
             <LogoDexola />
