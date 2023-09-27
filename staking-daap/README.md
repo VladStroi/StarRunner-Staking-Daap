@@ -1,8 +1,14 @@
-# React + Vite
+Daap for Dexola boot camp.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stack: React + TypeScript + Vite + Wagmi
+Client: "Dexola"
+Developer: Stroi Vladyslav
 
-Currently, two official plugins are available:
+link: https://star-runner-staking-daap.vercel.app/
+github: https://github.com/VladStroi/StarRunner-Staking-Daap
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+navigation: cd staking-daap
+build: npm run dev
+
+
+the work is not finished, it is under development!
