@@ -66,15 +66,20 @@ export const Stake = () => {
   //
 
   //approve & stake btn
-  const [hash, setHash] = useState("");
+  const [approveHash, setApproveHash] = useState("");
+  // const [stakeHash, setStakeHash] = useState("");
+
 
   const approveToken = tokenContractWrite();
 
   const stakeToken = smartContractWrite();
 
-  const res = useWaitForTransaction({
-    hash,
+  const approveTransaction = useWaitForTransaction({
+    hash: approveHash,
   });
+  // const stakeTransaction = useWaitForTransaction({
+  //   hash: stakeHash,
+  // });
 
   const stake = async () => {
     if (Number(depositValue) > Number(tokenBalance)) {
@@ -84,18 +89,18 @@ export const Stake = () => {
         functionName: "approve",
         args: [contractAddress, BigInt(depositValue * 10 ** 18)],
       });
-      setHash(sendApprove.hash);
+      setApproveHash(sendApprove.hash);
     }
   };
 
   useEffect(() => {
-    if (res.isSuccess) {
+    if (approveTransaction.isSuccess) {
       stakeToken.write({
         functionName: "stake",
         args: [BigInt(depositValue * 10 ** 18)],
       });
     }
-  }, [res.status]);
+  }, [approveTransaction.status]);
   //
 
   return (
@@ -130,6 +135,10 @@ export const Stake = () => {
           <h3>STRU</h3>
         </div>
       </div>
+      {/* <div className={styles.notification} >
+        <div className={`${styles.loader} ${styles.rotate}`}></div>
+        <span>Adding {depositValue} STRU to Staking</span>
+      </div> */}
       <button onClick={stake}>stake</button>
     </section>
   );

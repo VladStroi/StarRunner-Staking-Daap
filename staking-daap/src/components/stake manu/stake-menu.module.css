@@ -4,7 +4,6 @@
   overflow: hidden;
   background-color: var(--background-color);
   padding: 40px 120px; 
-  /* TODO mobile top border with radius */
 }
 
 .navigation {
